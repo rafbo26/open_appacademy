@@ -334,5 +334,133 @@ puts reverse_words('keep coding') # => 'peek gnidoc'
 puts reverse_words('simplicity is prerequisite for reliability') # => 'yticilpmis si etisiuqererp rof ytilibailer'
 
 
+def rotate_array(arr, num)
+	num.times { arr.unshift(arr.pop) }
+  return arr
+end
+
+print rotate_array([ "Matt", "Danny", "Mashu", "Matthias" ], 1) # => [ "Matthias", "Matt", "Danny", "Mashu" ]
+puts
+
+print rotate_array([ "a", "b", "c", "d" ], 2) # => [ "c", "d", "a", "b" ]
+puts
 
 
+# Pig latin translation uses the following rules:
+# - for words that start with a vowel, add 'yay' to the end
+# - for words that start with a nonvowel, move all letters before the first vowel to the end of the word and add 'ay'
+
+def pig_latin_word(word)
+  vowels = "aeiou"
+  if vowels.include?(word[0])
+    word += "yay"
+  else
+    word = word.split("")
+    i = 1
+    while i < word.length
+      if vowels.include?(word[i])
+      	i.times { word << word.shift }
+        word = word.join("")
+        word += "ay"
+        break
+      end
+      i += 1
+    end
+  end
+  return word
+end
+
+puts pig_latin_word("apple")   # => "appleyay"
+puts pig_latin_word("eat")     # => "eatyay"
+puts pig_latin_word("banana")  # => "ananabay"
+puts pig_latin_word("trash")   # => "ashtray"
+
+
+def combinations(arr1)
+  arr2 = arr1
+  result = []
+	arr1.each_with_index do |ele1, i|
+      arr2.each_with_index do |ele2, j|
+        if j > i
+          result << [ele1, ele2]
+        end
+      end
+    end
+  return result
+end
+
+print combinations(["a", "b", "c"]); # => [ [ "a", "b" ], [ "a", "c" ], [ "b", "c" ] ]
+puts
+
+print combinations([0, 1, 2, 3]); # => [ [ 0, 1 ], [ 0, 2 ], [ 0, 3 ], [ 1, 2 ], [ 1, 3 ], [ 2, 3 ] ]
+puts
+
+def opposite_count(nums)
+  counter = 0
+  nums.each_with_index do |ele1, i|
+    nums.each_with_index do |ele2, j|
+      if i < j
+        if ele1 + ele2 == 0
+          counter += 1
+        end
+      end
+    end
+  end
+  return counter
+end
+
+puts opposite_count([ 2, 5, 11, -5, -2, 7 ]) # => 2
+puts opposite_count([ 21, -23, 24 -12, 23 ]) # => 1
+
+
+
+def two_d_sum(arr)
+  sum = 0
+  arr.each do |subArr|
+    subArr.each do |ele|
+      sum += ele
+    end
+  end
+  return sum
+end
+
+array_1 = [
+  [4, 5],
+  [1, 3, 7, 1]
+]
+puts two_d_sum(array_1)    # => 21
+
+array_2 = [
+  [3, 3],
+  [2],
+  [2, 5]
+]
+puts two_d_sum(array_2)    # => 15
+
+
+
+def two_d_translate(arr)
+  translate = []
+  
+  arr.each do |subAr|
+    subAr[1].times { translate << subAr[0] }
+  end
+  return translate
+end
+
+arr_1 = [
+  ['boot', 3],
+  ['camp', 2],
+  ['program', 0]
+]
+
+print two_d_translate(arr_1) # => [ 'boot', 'boot', 'boot', 'camp', 'camp' ]
+puts
+
+arr_2 = [
+  ['red', 1],
+  ['blue', 4]
+]
+
+print two_d_translate(arr_2) # => [ 'red', 'blue', 'blue', 'blue', 'blue' ]
+puts
