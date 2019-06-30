@@ -188,6 +188,150 @@
 
 
 
+# Array methods exercises
+
+def to_initials(name)
+  initial = ""
+	name.split(" ").each do |ele|
+      initial += ele[0]
+    end
+  return initial
+end
+
+puts to_initials("Kelvin Bridges")      # => "KB"
+puts to_initials("Michaela Yamamoto")   # => "MY"
+puts to_initials("Mary La Grange")      # => "MLG"
+
+
+def first_in_array(arr, el1, el2)
+  if arr.index(el1) < arr.index(el2)
+    return el1
+  else
+    return el2
+  end
+end
+
+puts first_in_array(["a", "b", "c", "d"], "d", "b"); # => "b"
+puts first_in_array(["cat", "bird" ,"dog", "mouse" ], "dog", "mouse"); # => "dog"
+
+
+def abbreviate_sentence(sent)
+  newSent = [];
+  sent.split(" ").each do |ele|
+    if ele.length > 4
+      newSent << ele.split("a").join("").split("o").join("").split("e").join().split("i").join("").split("u").join("")
+    else
+      newSent << ele
+    end
+  end
+  return newSent.join(" ")
+end
+
+puts abbreviate_sentence("follow the yellow brick road") # => "fllw the yllw brck road"
+puts abbreviate_sentence("what a wonderful life")        # => "what a wndrfl life"
+
+
+def format_name(str)
+  str = str.downcase
+  name = []
+  str.split(" ").each do |ele| 
+    ele[0] = ele[0].upcase
+    name << ele
+  end
+  return name.join(" ")
+end
+
+puts format_name("chase WILSON") # => "Chase Wilson"
+puts format_name("brian CrAwFoRd scoTT") # => "Brian Crawford Scott"
+
+
+def is_valid_name(str)
+  parts = str.split(" ")
+  isTrue = true
+  parts.each do |part|
+    if part[0] == part[0].downcase
+      isTrue = false
+    end
+    part[1..-1].each_char do |chr|
+      if chr == chr.upcase
+        isTrue = false
+      end
+    end
+  end  
+  return isTrue && parts.length > 1
+end
+
+puts is_valid_name("Kush Patel")       # => true
+puts is_valid_name("Daniel")           # => false
+puts is_valid_name("Robert Downey Jr") # => true
+puts is_valid_name("ROBERT DOWNEY JR") # => false
+puts is_valid_name("RobERT Downey") # => false
+
+
+
+
+def is_valid_email(str)
+  parts = str.split("@")
+  
+  if parts.length != 2
+    return false
+  end
+  
+  if parts[1].split(".").length != 2
+    return false
+  end
+  
+  firstPart = parts[0]
+  
+  firstPart.each_char do |ele|
+    if ele == ele.upcase
+    	return false
+  	end
+  end
+  
+  return true
+  
+end
+
+puts is_valid_email("abc@xy.z")         # => true
+puts is_valid_email("jdoe@gmail.com")   # => true
+puts is_valid_email("jdoe@g@mail.com")  # => false
+puts is_valid_email("jdoe42@gmail.com") # => false
+puts is_valid_email("jdegmail.com")    # => false
+puts is_valid_email("az@email")         # => false
+
+
+
+def array_translate(array)
+  translate = ""
+	array.each_with_index do |ele, idx|
+      if idx % 2 == 0
+        array[idx + 1].times { translate += ele }
+      end
+    end
+  return translate
+end
+
+      
+print array_translate(["Cat", 2, "Dog", 3, "Mouse", 1]); # => "CatCatDogDogDogMouse"
+puts
+
+print array_translate(["red", 3, "blue", 1]); # => "redredredblue"
+puts
+
+
+def reverse_words(sent)
+  reversed = []
+  words = sent.split(" ")
+  words.each do |word|
+    word = word.split("").reverse.join("")
+    reversed << word
+  end
+  return reversed.join(" ")
+end
+
+puts reverse_words('keep coding') # => 'peek gnidoc'
+puts reverse_words('simplicity is prerequisite for reliability') # => 'yticilpmis si etisiuqererp rof ytilibailer'
 
 
 
