@@ -529,3 +529,73 @@ puts
 
 print cat_builder("Salem", "black", 100) #=> {"name"=>"Salem", "color"=>"black", "age"=>100}
 puts
+
+
+def frequent_letters(string)
+  arr = []
+  string.each_char do |ele|
+    new_str = string.split(ele).length
+    if new_str > 3 && !arr.include?(ele)
+      arr << ele
+    end
+  end
+  return arr
+end
+
+print frequent_letters('mississippi') #=> ["i", "s"]
+puts
+print frequent_letters('bootcamp') #=> []
+puts
+
+
+
+def hash_to_pairs(hash)
+  arr = []
+  hash.each do |k, v|
+    arr << [k, v]
+  end
+  return arr
+end
+
+
+print hash_to_pairs({"name"=>"skateboard", "wheels"=>4, "weight"=>"7.5 lbs"}) #=> [["name", "skateboard"], ["wheels", 4], ["weight", "7.5 lbs"]]
+puts
+
+
+print hash_to_pairs({"kingdom"=>"animalia", "genus"=>"canis", "breed"=>"German Shepherd"}) #=> [["kingdom", "animalia"], ["genus", "canis"], ["breed", "German Shepherd"]]
+puts
+
+
+def unique_elements(arr)
+  new_arr = []
+  hash = Hash.new(0)
+  arr.each { |ele| hash[ele] += 1 }
+  hash.each_key { |k| new_arr << k }
+  return new_arr
+end
+
+print unique_elements(['a', 'b', 'a', 'a', 'b', 'c']) #=> ["a", "b", "c"]
+puts
+
+
+def element_replace(arr, hash)
+  replaced = []
+  arr.each do |ele|
+    if hash[ele] != nil
+      replaced << hash[ele]
+    else
+      replaced << ele
+    end
+  end
+  return replaced
+end
+
+arr1 = ["LeBron James", "Lionel Messi", "Serena Williams"]
+hash1 = {"Serena Williams"=>"tennis", "LeBron James"=>"basketball"}
+print element_replace(arr1, hash1) # => ["basketball", "Lionel Messi", "tennis"]
+puts
+
+arr2 = ["dog", "cat", "mouse"]
+hash2 = {"dog"=>"bork", "cat"=>"meow", "duck"=>"quack"}
+print element_replace(arr2, hash2) # => ["bork", "meow", "mouse"]
+puts
