@@ -76,7 +76,102 @@ print o_words("How did you do that?") #=> ["How", "you", "do"]
 puts
 
 
+# Last Index
+# Write a method last_index that takes in a string and a character. The method should return the last index where the character can be found in the string.
 
 
+def last_index(str, char)
+  last_index = -1
+  str.split("").each.with_index do |ch, idx| 
+    if ch == char
+      last_index = idx
+    end
+  end
+  return last_index
+end
+
+puts last_index("abca", "a")       #=> 3
+puts last_index("mississipi", "i") #=> 9
+puts last_index("octagon", "o")    #=> 5
+puts last_index("programming", "m")#=> 7
 
 
+# Most Vowels
+# Write a method most_vowels that takes in a sentence string and returns the word of the sentence that contains the most vowels.
+
+def most_vowels(sentence)
+  vowels = "aeiou"
+  biggest = 0
+  sent = sentence.split(" ")
+  sent.map.with_index do |ele, idx|
+    ele = ele.split("").select { |char| vowels.include?(char) }.length
+    if ele > biggest
+      biggest = idx
+    end
+  end
+  return sent[biggest]
+end
+
+print most_vowels("what a wonderful life") #=> "wonderful"
+
+
+# Prime
+# Write a method prime? that takes in a number and returns a boolean, indicating whether the number is prime. A prime number is only divisible by 1 and itself.
+
+def prime?(num)
+  return (1..num).select { |ele| num % ele == 0 }.length <= 2 && num > 0
+end
+
+puts prime?(2)  #=> true
+puts prime?(5)  #=> true
+puts prime?(11) #=> true
+puts prime?(4)  #=> false
+puts prime?(9)  #=> false
+puts prime?(-5) #=> false
+
+
+# Pick Primes
+# Write a method pick_primes that takes in an array of numbers and returns a new array containing only the prime numbers.
+
+def pick_primes(numbers)
+  return numbers.select { |num| (2...num).select { |ele| num % ele == 0 }.length == 0 }
+end
+
+print pick_primes([2, 3, 4, 5, 6]) #=> [2, 3, 5]
+puts
+print pick_primes([101, 20, 103, 2017]) #=> [101, 103, 2017]
+puts
+
+
+# Prime Factors
+# Write a method prime_factors that takes in a number and returns an array containing all of the prime factors of the given number.
+
+def prime_factors(num)
+  factors = (2...num).select { |ele| num % ele == 0 }
+  return factors.select { |factor| (2...factor).select { |num| factor % num == 0 }.length == 0 }
+end
+
+print prime_factors(24) #=> [2, 3]
+puts
+print prime_factors(60) #=> [2, 3, 5]
+puts
+
+
+# Greatest Factor Array
+# Write a method greatest_factor_array that takes in an array of numbers and returns a new array where every even number is replaced with it's greatest factor. A greatest factor is the largest number that divides another with no remainder. For example the greatest factor of 16 is 8. (For the purpose of this problem we won't say the greatest factor of 16 is 16, because that would be too easy, ha)
+
+def greatest_factor_array(arr)
+  arr = arr.map do |ele|
+    if ele % 2 == 0
+      ele / 2
+    else
+      ele
+    end
+  end
+  return arr
+end
+
+print greatest_factor_array([16, 7, 9, 14]) # => [8, 7, 9, 7]
+puts
+print greatest_factor_array([30, 3, 24, 21, 10]) # => [15, 3, 12, 21, 5]
+puts
