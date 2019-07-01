@@ -21,7 +21,7 @@ This repository contains my progress through Open App Academy Bootcamp. It will 
 | [Eloquent JavaScript](https://eloquentjavascript.net/)                                                                                                                |                       |
 | **Practice**                                                                                                                                                          |      **Status**       | **Evidence** |
 | [Google Home Page](https://www.theodinproject.com/courses/web-development-101/lessons/html-css)                                                                       |                       |
-| [Rock Paper Scissors](https://www.theodinproject.com/courses/web-development-101/lessons/rock-paper-scissors)                                                         |                       |
+| [Rock Paper Scissors](https://www.theodinproject.com/courses/web-development-101/lessons/rock-paper-scissors)                                                         | Completed: 20/06/2019 |
 | Tier Programming Project                                                                                                                                              |                       |
 | Tier Programming Project                                                                                                                                              |                       |
 | **Capstone**                                                                                                                                                          |      **Status**       | **Evidence** |
