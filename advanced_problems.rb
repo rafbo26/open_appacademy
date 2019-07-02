@@ -175,3 +175,21 @@ print greatest_factor_array([16, 7, 9, 14]) # => [8, 7, 9, 7]
 puts
 print greatest_factor_array([30, 3, 24, 21, 10]) # => [15, 3, 12, 21, 5]
 puts
+
+
+# Write a method perfect_square? that takes in a number and returns a boolean indicating whether it is a perfect square. A perfect square is a number that results from multiplying a number by itself. For example, 9 is a perfect square because 3  3 = 9, 25 is a perfect square because 5  5 = 25.
+
+def perfect_square?(num)
+  (2..num / 2).each do |ele|
+    if num == ele * ele
+      return true
+    end
+  end
+  return false
+end
+
+puts perfect_square?(99)  #=> false
+puts perfect_square?(12)  #=> false
+puts perfect_square?(30)  #=> false
+puts perfect_square?(9)   #=> true
+puts perfect_square?(25)  #=> true
