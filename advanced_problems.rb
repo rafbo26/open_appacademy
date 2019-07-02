@@ -436,3 +436,37 @@ end
 
 puts consonant_cancel("down the rabbit hole") #=> "own e abbit ole"
 puts consonant_cancel("writing code is challenging") #=> "iting ode is allenging"
+
+
+# Same Char Collapse
+# Write a method same_char_collapse that takes in a string and returns a collapsed version of the string. To collapse the string, we repeatedly delete 2 adjacent characters that are the same until there are no such adjacent characters. If there are multiple pairs that can be collapsed, delete the leftmost pair. For example, we take the following steps to collapse "zzzxaaxy": zzzxaaxy -> zxaaxy -> zxxy -> zy
+
+def have_pair?(str)
+  str.each_char.with_index do |char, idx|
+    if str[idx] == str[idx + 1]
+      return true
+    end
+  end
+  return false
+end
+
+def same_char_collapse(str)
+  while have_pair?(str)
+    str.each_char.with_index do |ele, idx|
+      if str[idx] == str[idx + 1]
+        str[idx] = ""
+      	str[idx] = ""
+      	break
+      end
+    end
+  end
+  return str
+end
+
+
+
+puts same_char_collapse("zzzxaaxy")   #=> "zy"
+# # because zzzxaaxy -> zxaaxy -> zxxy -> zy
+
+puts same_char_collapse("uqrssrqvtt") #=> "uv"
+# # because uqrssrqvtt -> uqrrqvtt -> uqqvtt -> uvtt -> uv
