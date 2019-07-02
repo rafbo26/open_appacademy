@@ -193,3 +193,246 @@ puts perfect_square?(12)  #=> false
 puts perfect_square?(30)  #=> false
 puts perfect_square?(9)   #=> true
 puts perfect_square?(25)  #=> true
+
+
+# Triple Sequence
+# Write a method triple_sequence that takes in two numbers, start and length. The method should return an array representing a sequence that begins with start and is length elements long. In the sequence, every element should be 3 times the previous element. Assume that the length is at least 1.
+
+def triple_sequence(start, length)
+  arr = [start]
+  (length - 1).times { arr << arr[-1] * 3 }
+  return arr
+end
+
+print triple_sequence(2, 4) # => [2, 6, 18, 54]
+puts
+print triple_sequence(4, 5) # => [4, 12, 36, 108, 324]
+puts
+
+
+# Summation Sequence
+# A number's summation is the sum of all positive numbers less than or equal to the number. For example: the summation of 3 is 6 because 1 + 2 + 3 = 6, the summation of 6 is 21 because 1 + 2 + 3 + 4 + 5 + 6 = 21. Write a method summation_sequence that takes in a two numbers: start and length. The method should return an array containing length total elements. The first number of the sequence should be the start number. At any point, to generate the next element of the sequence we take the summation of the previous element. You can assume that length is not zero.
+
+def summation_sequence(start, length)
+  summation = [start]
+  (length - 1).times { summation << get_summation(summation[-1]) }
+  return summation
+end
+
+def get_summation(num)
+  sum = 0
+  (1..num).each { |num| sum += num }
+  return sum
+end
+
+
+print summation_sequence(3, 4) # => [3, 6, 21, 231]
+print summation_sequence(5, 3) # => [5, 15, 120]
+
+
+# Fibonacci
+# The fibonacci sequence is a sequence of numbers whose first and second elements are 1. To generate further elements of the sequence we take the sum of the previous two elements. For example the first 6 fibonacci numbers are 1, 1, 2, 3, 5, 8. Write a method fibonacci that takes in a number length and returns the fibonacci sequence up to the given length.
+
+def fibonacci(length)
+  arr = []
+  length.times { 
+    if arr.length < 2
+      arr << 1
+    else
+      arr << arr[-1] + arr[-2]
+    end
+  }
+  return arr
+end
+
+print fibonacci(100) # => []
+puts
+print fibonacci(1) # => [1]
+puts
+print fibonacci(6) # => [1, 1, 2, 3, 5, 8]
+puts
+print fibonacci(8) # => [1, 1, 2, 3, 5, 8, 13, 21]
+puts
+
+
+# Caesar Cipher
+# Write a method caesar_cipher that takes in a string and a number. The method should return a new string where every character of the original is shifted num characters in the alphabet.
+
+# Feel free to use this variable:
+# alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+def caesar_cipher(str, num)
+  alpha = "abcdefghijklmnopqrstuvwxyz"
+  new_str = str.split("")
+  new_str = new_str.map do |ele| 
+    idx = alpha.index(ele.downcase) + num
+    if idx < alpha.length
+      alpha[idx]
+    else
+      alpha[idx - alpha.length]
+    end
+  end
+  return new_str
+end
+
+puts caesar_cipher("apple", 1)    #=> "bqqmf"
+puts caesar_cipher("bootcamp", 2) #=> "dqqvecor"
+puts caesar_cipher("zebra", 4)    #=> "difve"
+
+
+# Vowel Cipher
+# Write a method vowel_cipher that takes in a string and returns a new string where every vowel becomes the next vowel in the alphabet.
+
+def vowel_cipher(string)
+  vowels = "aeiou"
+  new_str = ""
+  string.each_char do |char|
+    if vowels.include?(char)
+      idx = vowels.index(char) + 1
+      new_str += vowels[idx % 5]
+    else
+       new_str += char
+    end
+  end
+  return new_str
+end
+
+puts vowel_cipher("bootcamp") #=> buutcemp
+puts vowel_cipher("paper cup") #=> pepir cap
+puts vowel_cipher("aeiou") #=> pepir cap
+
+
+# Double Letter Count
+# Write a method that takes in a string and returns the number of times that the same letter repeats twice in a row.
+
+def double_letter_count(string)
+  count = 0
+  string.each_char.with_index do |ele, idx|
+    if ele == string[idx - 1]
+      count += 1
+    end
+  end
+  return count
+end
+
+puts double_letter_count("the jeep rolled down the hill") #=> 3
+puts double_letter_count("bootcamp") #=> 1
+
+
+# Adjacent Sum
+# Write a method adjacent_sum that takes in an array of numbers and returns a new array containing the sums of adjacent numbers in the original array. See the examples.
+
+def adjacent_sum(arr)
+  new_arr = []
+  arr.each.with_index do |ele, idx|
+    if idx < arr.length - 1
+      new_arr << ele + arr[idx + 1]
+    end
+  end
+  return new_arr
+end
+
+print adjacent_sum([3, 7, 2, 11]) #=> [10, 9, 13], because [ 3+7, 7+2, 2+11 ]
+puts
+print adjacent_sum([2, 5, 1, 9, 2, 4]) #=> [7, 6, 10, 11, 6], because [2+5, 5+1, 1+9, 9+2, 2+4]
+puts
+
+
+# Pyramid Sum
+# Write a method pyramid_sum that takes in an array of numbers representing the base of a pyramid. The function should return a 2D array representing a complete pyramid with the given base. To construct a level of the pyramid, we take the sum of adjacent elements of the level below.
+
+# For example, the base [1, 4, 6] gives us the following pyramid
+#     15
+#   5   10
+# 1   4    6
+
+def pyramid_sum(base)
+  arr = [base]
+  (base.length - 1).times do
+    sum = adjacent_sum(arr[0])
+    arr.unshift(sum)
+  end
+  return arr
+end
+
+def adjacent_sum(arr)
+  new_arr = []
+  arr.each.with_index do |ele, idx|
+    if idx < arr.length - 1
+      new_arr << ele + arr[idx + 1]
+    end
+  end
+  return new_arr
+end
+
+print pyramid_sum([1, 4, 6]) #=> [[15], [5, 10], [1, 4, 6]]
+puts
+
+print pyramid_sum([3, 7, 2, 11]) #=> [[41], [19, 22], [10, 9, 13], [3, 7, 2, 11]]
+puts
+
+
+# All Else Equal
+# Write a method all_else_equal that takes in an array of numbers. The method should return the element of the array that is equal to half of the sum of all elements of the array. If there is no such element, the method should return nil.
+
+def all_else_equal(arr)
+  sum = 0
+  arr.each { |ele| sum += ele }
+  if arr.include?(sum / 2) 
+    return sum / 2
+  else
+    return nil
+  end
+end
+
+p all_else_equal([2, 4, 3, 10, 1]) #=> 10, because the sum of all elements is 20
+p all_else_equal([6, 3, 5, -9, 1]) #=> 3, because the sum of all elements is 6
+p all_else_equal([1, 2, 3, 4])     #=> nil, because the sum of all elements is 10 and there is no 5 in the array
+
+
+# Anagrams
+# Write a method anagrams? that takes in two words and returns a boolean indicating whether or not the words are anagrams. Anagrams are words that contain the same characters but not necessarily in the same order. Solve this without using .sort
+
+def anagrams?(word1, word2)
+  word1.each_char do |char|
+    if !word2.include?(char) || word1.length != word2.length
+      return false
+    end
+  end
+  return true
+end
+
+puts anagrams?("cat", "act")          #=> true
+puts anagrams?("restful", "fluster")  #=> true
+puts anagrams?("cat", "dog")          #=> false
+puts anagrams?("boot", "bootcamp")    #=> false
+
+
+# Consonant Cancel
+# Write a method consonant_cancel that takes in a sentence and returns a new sentence where every word begins with it's first vowel.
+
+def consonant_cancel(sentence)
+  words = sentence.split(" ")
+  new_sent = words.map do |word|
+    change_word(word)
+  end
+  return new_sent.join(" ")
+end
+
+def change_word (word)
+  vowels = "aeiou"
+  new_word = ""
+  first_vowel = false
+  word.each_char do |char|
+    if vowels.include?(char)
+      first_vowel = true
+    end
+    if first_vowel
+      new_word += char
+    end
+  end
+  return new_word
+end
+
+puts consonant_cancel("down the rabbit hole") #=> "own e abbit ole"
+puts consonant_cancel("writing code is challenging") #=> "iting ode is allenging"
