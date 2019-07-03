@@ -8,6 +8,7 @@ def max_inject(*arr)
     else
       acc
     end
+  end
 end
 
 p max_inject(1, -4, 0, 7, 5)  # => 7

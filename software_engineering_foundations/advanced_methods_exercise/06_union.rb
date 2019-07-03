@@ -2,5 +2,11 @@
 # The method should return an array containing all elements of the given arrays.
 
 
+def union(*arrays)
+  arr = []
+  arrays.each { |array| arr.push(*array) }
+  return arr
+end
+
 p union(["a", "b"], [1, 2, 3]) # => ["a", "b", 1, 2, 3]
 p union(["x", "y"], [true, false], [20, 21, 23]) # => ["x", "y", true, false, 20, 21, 23]
