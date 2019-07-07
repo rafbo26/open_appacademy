@@ -40,7 +40,12 @@ class Hangman
   def try_guess(char)
     if already_attempted?(char)
       puts "That has already been attempted"
-      return false
+      false
+    elsif char.length == 0
+      puts "Pick a character and try again"
+    elsif char == @secret_word
+      @guess_word = @secret_word.split("")
+      return true
     else
       @attempted_chars << char
       if @secret_word.include?(char)
@@ -62,53 +67,29 @@ class Hangman
   def win?
     if @guess_word.join("") == @secret_word
       puts "WIN"
+      puts
       true
     else
       false
     end
   end
 
+  def lose?
+    if remaining_incorrect_guesses == 0
+      puts "LOSE"
+      puts
+      true
+    else
+      false
+    end
+  end
 
-
-  # def game_over?
-  #   if @remaining_incorrect_guesses <= 0 
-  #     lose
-  #     true
-  #   elsif @guess_word.join("") == @secret_word
-  #     win
-  #     true
-  #   end
-  # end
-  
-  # def lose
-  #   puts "You lose. Secret word: #{@secret_word}"
-  # end
-  
-  # def win
-  #   puts "The word was #{@guess_word.join("")}"
-  #   puts "You win!"
-  # end
-  
-  # def ask_user_for_guess
-  #   print "Enter a char: "
-  #   guess = gets.chomp
-  #   if guess.length > 1 || guess.length == 0
-  #     puts
-  #     puts "Please enter single character"
-  #   elsif already_attempted?(guess)
-  #     puts
-  #     puts "Already guessed #{guess}, try again"
-  #   else
-  #     @attempted_chars << guess
-  #     try_guess(guess)
-  #   end
-  # end
-  
-
-
-  
-
-  
-
-  
+  def game_over?
+    if win? || lose?
+      puts "Secret word was #{@secret_word}"
+      true
+    else
+      false
+    end
+  end
 end
