@@ -1,14 +1,13 @@
-require "employee"
-
 class Startup
   
-  attr_reader :name, :funding, :salaries, :employees
+  attr_reader :name, :funding, :salaries, :employees, :active
 
   def initialize(name, funding, salaries)
     @name = name
     @funding = funding
     @salaries = salaries
     @employees = []
+    @active = true
   end
   
   def valid_title?(title)
@@ -22,9 +21,33 @@ class Startup
   def hire(name, title)
     if valid_title?(title)
       @employees << Employee.new(name, title)
+      puts "\n#{name} was successfully hired as #{title}."
     else
-      raise "Title invalid"
+      puts "Title invalid"
     end
+  end
+
+  def print_titles
+    puts "------------------------------"
+    puts "Available positions: "
+    puts
+    @salaries.each_key { |title| puts title }
+    puts
+    puts "------------------------------"
+  end
+
+  def print_emps
+    puts "------------------------------"
+    puts
+    @employees.each { |emp| puts "Name: #{emp.name}, title: #{emp.title}. " }
+    puts
+    puts "------------------------------"
+  end
+
+  def print_funding
+    puts
+    puts "Current funding is: #{@funding}"
+    puts
   end
   
   def size
@@ -37,12 +60,13 @@ class Startup
       employee.pay(salary)
       @funding -= salary
     else
-      raise "Not enough funding"
+      puts "Not enough funding"
     end
   end
   
   def payday
     @employees.each { |emp| pay_employee(emp) }
+    puts "\nSalaries have been paid."
   end
   
   def average_salary
@@ -56,6 +80,7 @@ class Startup
   def close
     @employees = []
     @funding = 0
+    @active = false
   end
   
   def acquire(startup)
