@@ -82,14 +82,19 @@ end
 #
 # Examples:
 # 
-# reverse_string("")            # => ""
-# reverse_string("c")           # => "c"
-# reverse_string("internet")    # => "tenretni"
-# reverse_string("friends")     # => "sdneirf"
+
 def reverse_string(str)
+
+  return "" if str.length == 0
+
+  str[-1] + reverse_string(str.chop)
 
 end
 
+# p reverse_string("")            # => ""
+# p reverse_string("c")           # => "c"
+# p reverse_string("internet")    # => "tenretni"
+# p reverse_string("friends")     # => "sdneirf"
 
 # A 1-dimensional array is also known as a flattened array.
 # Write a method, flatten(data), that accepts a single argument. The
@@ -102,13 +107,7 @@ end
 #
 # Examples:
 #
-# array_1 = [1, 2, [[3, 4], [5, [6]]], [7, 8]]
-# flatten(array_1)      # => [ 1, 2, 3, 4, 5, 6, 7, 8 ]
-#
-# array_2 = ['this', ['problem', 'is'], [['pretty', 'tough'], [[':)']]]]
-# flatten(array_2)      # => [ 'this', 'problem', 'is', 'pretty', 'tough', ':)' ]
-#
-# flatten('base case')  # => [ 'base case' ]
+
 #
 # Another Hint:
 #
@@ -119,6 +118,30 @@ end
 #     1-dimensional array: ['some data']
 #     2-dimensional array: [['some data']]
 #     3-dimensional array: [[['some data']]]
+
+require "byebug"
+
 def flatten(data)
 
+  if !data.kind_of?(Array)
+    return [data]
+  end
+  if data.length == 0
+    return 0
+  end
+
+  flatten(data.shift) << flatten(data)
+
 end
+
+
+array_1 = [ 1, 2, [3, 4]]
+p flatten(array_1)      # => [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+
+# array_2 = ['this', ['problem', 'is'], [['pretty', 'tough'], [[':)']]]]
+# p flatten(array_2)      # => [ 'this', 'problem', 'is', 'pretty', 'tough', ':)' ]
+
+# p flatten('base case')  # => [ 'base case' ]
+
+# array_1 = [1, 2, [[3, 4], [5, [6]]], [7, 8]]
+# p flatten(array_1)      # => [ 1, 2, 3, 4, 5, 6, 7, 8 ]
