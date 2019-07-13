@@ -122,26 +122,25 @@ end
 require "byebug"
 
 def flatten(data)
-
   if !data.kind_of?(Array)
     return [data]
   end
   if data.length == 0
-    return 0
+    return []
   end
 
-  flatten(data.shift) << flatten(data)
+  flatten(data.shift) + flatten(data)
 
 end
 
 
-array_1 = [ 1, 2, [3, 4]]
-p flatten(array_1)      # => [ 1, 2, 3, 4, 5, 6, 7, 8 ]
-
-# array_2 = ['this', ['problem', 'is'], [['pretty', 'tough'], [[':)']]]]
-# p flatten(array_2)      # => [ 'this', 'problem', 'is', 'pretty', 'tough', ':)' ]
-
-# p flatten('base case')  # => [ 'base case' ]
-
-# array_1 = [1, 2, [[3, 4], [5, [6]]], [7, 8]]
+# array_1 = [ 1, 2, [3, 4]]
 # p flatten(array_1)      # => [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+
+array_2 = ['this', ['problem', 'is'], [['pretty', 'tough'], [[':)']]]]
+p flatten(array_2)      # => [ 'this', 'problem', 'is', 'pretty', 'tough', ':)' ]
+
+p flatten('base case')  # => [ 'base case' ]
+
+array_1 = [1, 2, [[3, 4], [5, [6]]], [7, 8]]
+p flatten(array_1)      # => [ 1, 2, 3, 4, 5, 6, 7, 8 ]
