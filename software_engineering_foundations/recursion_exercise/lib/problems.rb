@@ -122,12 +122,8 @@ end
 require "byebug"
 
 def flatten(data)
-  if !data.kind_of?(Array)
-    return [data]
-  end
-  if data.length == 0
-    return []
-  end
+  return [data] if !data.kind_of?(Array)
+  return [] if data.length == 0
 
   flatten(data.shift) + flatten(data)
 
