@@ -4,8 +4,9 @@ class Game
 
   def initialize
     @players = get_players
-    @current_player = @player_1
-    @previous_player = @player_2
+    @players_num = @players.length
+    @current_player = @players[0]
+    @previous_player = nil
     @dictionary = populate_dictionary
     @fragment = ""
     @loses = {}
@@ -14,10 +15,13 @@ class Game
   def get_players
     print "Enter number of players: "
     player_qty = gets.chomp.to_i
-    players = {}
+    players = []
     (1..player_qty).each do |i|
-      
+      print "Enter name of Player #{i}: "
+      name = gets.chomp
+      players << Player.new(name)
     end
+    players
   end
 
   def populate_dictionary
@@ -26,9 +30,11 @@ class Game
     dict
   end
   
-  def next_player!(current_player, next_player)
-    @previous_player = current_player
-    @current_player = next_player
+  def next_player!(current_player, previous_player)
+    prev_player_idx = current_player
+    curr_player_idx = (@players.index(current_player) + 1) % @players_num
+    @previous_player = @players[prev_player_idx]
+    @current_player = @players[curr_player_idx]
   end
   
   def play_round
