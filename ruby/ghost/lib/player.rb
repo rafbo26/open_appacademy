@@ -8,8 +8,7 @@ class Player
 
   def guess
     print "Enter next character: "
-    character = gets.chomp
-    
+    character = gets.chomp.downcase
   end
 
 end
