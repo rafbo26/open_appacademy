@@ -20,8 +20,3 @@ class Player
   end
 
 end
-
-
-  def translate_score(score)
-    "GHOST"[0...score]
-  end

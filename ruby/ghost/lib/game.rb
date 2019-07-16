@@ -1,9 +1,11 @@
 require_relative "./player"
+require_relative "./ai_player"
 
 class Game
 
+  attr_reader :fragment, :dictionary, :players_num
+
   def initialize
-    @loses = {}
     @players = get_players
     @players_num = @players.length
     @current_player = @players[0]
@@ -15,16 +17,18 @@ class Game
   end
 
   def get_players
-    print "Enter number of players: "
-    player_qty = gets.chomp.to_i
+    player_qty = 0
+    until player_qty >= 2
+      print "Enter number of players (2 or more): "
+      player_qty = gets.chomp.to_i
+    end
     players = []
     (1..player_qty).each do |i|
       print "Enter name of Player #{i}: "
       name = gets.chomp
-      player = Player.new(name)
-      players << player
-      @loses[player.name] = 0
+      players << Player.new(name)
     end
+    players << Ai_player.new("Skynet")
     players
   end
 
@@ -79,7 +83,7 @@ class Game
   
   
   def challenge_player(fragment)
-    puts "*** #{@current_player.name} challenged #{@previous_player.name} ***"
+    puts "\n*** #{@current_player.name} challenged #{@previous_player.name} ***"
     @dictionary.each do |word, v|
       if word[0...fragment.length] == fragment
         puts "There is a word: #{word}"
@@ -122,7 +126,7 @@ class Game
   
   def continue?
     puts
-    print "Press any key to continue the game."
+    print "Press ENTER to continue the game."
     input = gets.chomp
   end
   
