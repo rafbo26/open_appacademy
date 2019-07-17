@@ -1,3 +1,5 @@
+require "byebug"
+
 class Ai_player
 
   attr_accessor :name, :loses, :lost_game
@@ -19,6 +21,7 @@ class Ai_player
 
   def guess(fragment, players, dictionary)
     #sleep(2)
+    #debugger
     words = find_all_words(dictionary, fragment)
     if words.length == 0
       return "challenge"
@@ -44,7 +47,7 @@ class Ai_player
   def find_winning_word(words, fragment, players)
     len = fragment.length
     letters = Hash.new(0)
-    words.each do |word|
+    words.each_key do |word|
       if word.length == len + 1
         letters[word[len]] -= 99999999
       elsif (word.length - (len + 1)) % players == 0
