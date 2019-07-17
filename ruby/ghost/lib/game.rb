@@ -1,5 +1,6 @@
 require_relative "./player"
 require_relative "./ai_player"
+require_relative "./minimax"
 
 class Game
 
