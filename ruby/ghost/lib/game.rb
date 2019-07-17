@@ -12,7 +12,6 @@ class Game
     @previous_player = @players[-1]
     @dictionary = populate_dictionary
     @fragment = ""
-    @round = 1
     @challenged = false
   end
 
@@ -24,11 +23,16 @@ class Game
     end
     players = []
     (1..player_qty).each do |i|
-      print "Enter name of Player #{i}: "
-      name = gets.chomp
-      players << Player.new(name)
+      print "Player or AI (p/a): ?"
+      input = gets.chomp.downcase
+      if input == "p"
+        print "Enter name of Player #{i}: "
+        name = gets.chomp
+        players << Player.new(name)
+      else
+        players << Ai_player.new
+      end
     end
-    players << Ai_player.new("Skynet")
     players
   end
 
@@ -48,7 +52,7 @@ class Game
     while @players.length > 1
       play_round
       end_round
-      continue?
+      #continue?
       display_score
     end
     game_over
@@ -69,7 +73,7 @@ class Game
     puts "Player: #{player.name}"
     puts "Current fragment: #{@fragment}"
     alpha = ("a".."z")
-    guess = player.guess
+    guess = player.guess(@fragment, @players_num, @dictionary)
     if guess == "challenge"
       challenge_player(@fragment)
       @challenged = true
@@ -87,12 +91,12 @@ class Game
     @dictionary.each do |word, v|
       if word[0...fragment.length] == fragment
         puts "There is a word: #{word}"
-        @current_player.loses = 5
+        @current_player.loses += 1
         return true
       end
     end
     puts "#{fragment} doesn't exist in dictionary"
-    @previous_player.loses = 5
+    @previous_player.loses += 1
     return false
   end
   

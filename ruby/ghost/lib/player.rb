@@ -10,7 +10,7 @@ class Player
     @lost_game = false
   end
 
-  def guess
+  def guess(*ai)
     print "Enter next character: "
     character = gets.chomp.downcase
   end
