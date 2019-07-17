@@ -155,6 +155,7 @@ class Game
 end
 
 
-game = Game.new
-
-game.run
+if $PROGRAM_NAME == __FILE__
+  game = Game.new
+  game.run
+end
