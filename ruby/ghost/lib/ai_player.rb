@@ -6,7 +6,7 @@ class Ai_player
   attr_reader :word
 
   def initialize
-    @names = ["Skynet", "Alpha", "Omega", "Cerebro", "HAL 9000", "C-3PO", "The Matrix", "The Red Queen", "JARVIS", "KITT"]
+    @names = ["Alpha", "Omega", "Cerebro", "HAL 9000", "C-3PO", "The Matrix", "The Red Queen", "JARVIS", "KITT"]
     @name = get_name
     @loses = 0
     @word = ""

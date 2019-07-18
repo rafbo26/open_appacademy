@@ -34,6 +34,7 @@ class Game
         players << Ai_player.new
       end
     end
+    players << Minimax.new
     players
   end
 
