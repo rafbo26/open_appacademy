@@ -1,4 +1,5 @@
 require "byebug"
+require_relative "node"
 
 class Solver
   
@@ -7,16 +8,20 @@ class Solver
     @start = get_index(@maze, "S")
     @exit = get_index(@maze, "E")
     @position = get_index(@maze, "S")
-    @completed_moves = []
+    @open_nodes = []
+    @closed_nodes = []
+    @total_cost
   end
   
   def run
+    @open_nodes << @start
     make_move until @position == @exit
   end
   
   def make_move
     moves = find_moves(@position, @maze)
-    move = select_move(moves)
+    select_move(@position)
+    move = @choice
     @completed_moves << move
     @maze[move[0]][move[1]] = "X"
     @position = move
@@ -33,32 +38,37 @@ class Solver
   
   
   
-  def select_move(moves)
-    moves = moves.select { |move| !@completed_moves.include?(move) }
-    scores = []
-    moves.each do |move|
-      distance = get_distance(move[0], @exit[0]) + get_distance(move[1], @exit[1])
-      cost = 10 + distance
-      scores << cost
-    end
-    moves[scores.index(scores.min)]
+  def path_finder(node)
+    # Find lowest cost node on the open list
+    next_node = @open_nodes.min { |node| node.cost }
+    # Move it to the closed list
+    @closed_nodes << next_node
+    # Find all moves for that node (ignore closed and unmovable)
+    children = find_nodes(next_node)
+    
+
+
   end
   
-  def get_distance(position, destination)
-    (destination - position).abs
+
+  
+  def find_nodes(parent)
+    y = parent.y
+    x = parent.x
+    nodes = []
+    nodes << Node.new(parent, get_distance(y, x - 1), y, x - 1) if @maze[y][x - 1] != "*"
+    nodes << Node.new(parent, get_distancey, x + 1), y, x + 1) if @maze[y][x - 1] != "*"
+    nodes << Node.new(parent, get_distance(y - 1, x), y - 1, x) if @maze[y][x - 1] != "*"
+    nodes << Node.new(parent, get_distance(y + 1, x), y + 1, x) if @maze[y][x - 1] != "*"
+    nodes.select { |node| !@closed_nodes.include?(node) }
   end
   
-  def find_moves(position, maze)
-    y = position[0]
-    x = position[1]
-    direction = []
-    direction << [y, x - 1] if maze[y][x - 1] != "*"
-    direction << [y, x + 1] if maze[y][x + 1] != "*"
-    direction << [y - 1, x] if maze[y - 1][x] != "*"
-    direction << [y + 1, x] if maze[y + 1][x] != "*"
-    direction
-  end
   
+  def get_distance(y, x)
+    y_dist = (@exit[0] - y).abs
+    x_dist = (@exit[1] - x).abs
+    x + y
+  end
   
   
   def get_maze
@@ -66,10 +76,10 @@ class Solver
   end
   
   def get_index(maze, value)
-    maze.each.with_index do |line, row|
+    maze.each.with_index do |line, y|
       if line.include?(value)
-        col = line.index(value)
-        return [row, col]
+        x = line.index(value)
+        return Node.new(nil, 0, y, x)
       end
     end
   end
