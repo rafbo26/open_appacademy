@@ -19,14 +19,7 @@ class Solver
   end
   
   def make_move
-    moves = find_moves(@position, @maze)
-    select_move(@position)
-    move = @choice
-    @completed_moves << move
-    @maze[move[0]][move[1]] = "X"
-    @position = move
-    #debugger
-    print_maze
+    p path_finder(@start)
     sleep(1)
   end
   
@@ -46,8 +39,6 @@ class Solver
     # Find all moves for that node (ignore closed and unmovable)
     children = find_nodes(next_node)
     
-
-
   end
   
 
@@ -56,23 +47,27 @@ class Solver
     y = parent.y
     x = parent.x
     nodes = []
-    nodes << Node.new(parent, get_distance(y, x - 1), y, x - 1) if @maze[y][x - 1] != "*"
-    nodes << Node.new(parent, get_distancey, x + 1), y, x + 1) if @maze[y][x - 1] != "*"
-    nodes << Node.new(parent, get_distance(y - 1, x), y - 1, x) if @maze[y][x - 1] != "*"
-    nodes << Node.new(parent, get_distance(y + 1, x), y + 1, x) if @maze[y][x - 1] != "*"
-    nodes.select { |node| !@closed_nodes.include?(node) }
+    add_node(parent, nodes, y, x - 1) if @maze[y][x - 1] != "*"
+    add_node(parent, nodes, y, x + 1) if @maze[y][x + 1] != "*"
+    add_node(parent, nodes, y - 1, x) if @maze[y - 1][x] != "*"
+    add_node(parent, nodes, y + 1, x) if @maze[y + 1][x] != "*"
+    nodes
   end
   
-  
-  def get_distance(y, x)
-    y_dist = (@exit[0] - y).abs
-    x_dist = (@exit[1] - x).abs
-    x + y
+  def add_node(parent, nodes, y, x)
+    cost = get_cost(y, x)
+    nodes << Node.new(parent, cost, y, x)
+  end
+
+  def get_cost(y, x)
+    y_dist = (@exit.y - y).abs
+    x_dist = (@exit.x - x).abs
+    y_dist + x_dist
   end
   
   
   def get_maze
-    File.readlines("maze.txt").map { |line| line.chomp }
+    File.readlines("./maze.txt").map { |line| line.chomp }
   end
   
   def get_index(maze, value)
