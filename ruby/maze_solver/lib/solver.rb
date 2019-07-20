@@ -10,7 +10,6 @@ class Solver
     @position = get_index(@maze, "S")
     @open_nodes = []
     @closed_nodes = []
-    @total_cost
   end
   
   def run
@@ -19,7 +18,7 @@ class Solver
   end
   
   def make_move
-    p path_finder(@start)
+    p path_finder(@start, 0)
     sleep(1)
   end
   
@@ -31,14 +30,21 @@ class Solver
   
   
   
-  def path_finder(node)
+  def path_finder(node, cost)
     # Find lowest cost node on the open list
     next_node = @open_nodes.min { |node| node.cost }
     # Move it to the closed list
     @closed_nodes << next_node
+    @open_nodes.delete(next_node)
     # Find all moves for that node (ignore closed and unmovable)
-    children = find_nodes(next_node)
-    
+    p adjacent_nodes = find_nodes(next_node)
+    adjacent_nodes.each do |adj_node|
+      if @open_nodes.include?(adj_node)
+        #check if G score is lower
+      else
+        @open_nodes << adj_node
+      end
+    end
   end
   
 
@@ -55,16 +61,8 @@ class Solver
   end
   
   def add_node(parent, nodes, y, x)
-    cost = get_cost(y, x)
-    nodes << Node.new(parent, cost, y, x)
+    nodes << Node.new(parent, @exit, y, x)
   end
-
-  def get_cost(y, x)
-    y_dist = (@exit.y - y).abs
-    x_dist = (@exit.x - x).abs
-    y_dist + x_dist
-  end
-  
   
   def get_maze
     File.readlines("./maze.txt").map { |line| line.chomp }
@@ -74,7 +72,7 @@ class Solver
     maze.each.with_index do |line, y|
       if line.include?(value)
         x = line.index(value)
-        return Node.new(nil, 0, y, x)
+        return Node.new(nil,  0, y, x)
       end
     end
   end
