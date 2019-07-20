@@ -4,6 +4,7 @@ require_relative "node"
 class Solver
   
   def initialize
+    debugger
     @maze = get_maze
     @start = get_index(@maze, "S")
     @exit = get_index(@maze, "E")
@@ -31,6 +32,7 @@ class Solver
   
   
   def path_finder(node, cost)
+    
     # Find lowest cost node on the open list
     next_node = @open_nodes.min { |node| node.cost }
     # Move it to the closed list
