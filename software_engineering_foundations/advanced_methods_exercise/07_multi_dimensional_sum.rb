@@ -2,7 +2,22 @@
 # and returns the sum of all numbers in the array.
 
 def multi_dimensional_sum(array)
-  return array.flatten.reduce(:+) 
+    while !array.all? { |el| el.is_a?(Numeric) }
+        array = unpack(array)
+    end
+    return array.sum
+end
+
+def unpack(array)
+    new_array = []
+    array.each do |el| 
+        if el.is_a?(Numeric) 
+            new_array.push(el)
+        else
+            new_array.push(*el)
+        end
+    end
+    return new_array
 end
 
 arr_1 = [
@@ -13,9 +28,7 @@ arr_1 = [
 
 p multi_dimensional_sum(arr_1)    # => 19
 
-arr_2 = [
-    [ [3, 6], [7] ],
-    [ [5, 2], 1 ]
-]
+arr_2 = [[[3, 6], [7]], [[5, 2], 1]]
+
 
 p multi_dimensional_sum(arr_2)    # => 24
